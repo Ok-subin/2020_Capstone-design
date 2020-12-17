@@ -85,7 +85,6 @@ resultImage.save(저장 이미지 주소)
 
 
 ## 3. 결과<br/>
-
 모델의 실험 결과를 위한 2개의 이미지가 있다. 
 
 ### 첫 번째 이미지에 대한 결과
@@ -96,41 +95,44 @@ resultImage.save(저장 이미지 주소)
 <br/>
 
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
-&nbsp;&nbsp;[그림 5]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+&nbsp;&nbsp;[그림 4]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
 ![boundingBox_01](./ReadMe/boundingBox_01.jpg)<br/>
-[그림 5] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
+[그림 4] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
 
 <br/>
-&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
+&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다.[그림 5]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
 ![character_01](./ReadMe/character_01.jpg)<br/>
-[그림 7] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
+[그림 5] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
 
 <br/>
 ### 두 번째 이미지에 대한 결과
-다음으로는 테스트를 위해 직접 쓴 손글씨 이미지인 [그림 4]에 대한 결과이다.
+다음으로는 테스트를 위해 직접 쓴 손글씨 이미지인 [그림 6]에 대한 결과이다.
 
 <br/>
 
 
 ![original 02](./ReadMe/original_02.jpg)<br/>
-[그림 4] 원본이미지 2
+[그림 6] 원본이미지 2
 
 <br/>
 
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
-&nbsp;&nbsp;[그림 6]은 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+&nbsp;&nbsp;[그림 7]은 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
 ![boundingBox_02](./ReadMe/boundingBox_02.jpg)<br/>
-[그림 6] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
+[그림 7] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
 
 <br/>
-&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
+&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 8]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
 ![character_02](./ReadMe/character_02.jpg)<br/>
 [그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
 <br/>
+
+### 시연 동영상
+
 
 ## 4. 사용 방법<br/>
 &nbsp;&nbsp;프로그램을 사용하려면 소스코드 전체를 다운받은 후, 'modelMain.py' 파일을 수정해야 한다. 수정사항은 다음과 같으며, 수정이 필요한 부분은 해당 파일 내부에 주석으로 표시를 해놓았다.
