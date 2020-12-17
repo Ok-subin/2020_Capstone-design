@@ -2,7 +2,7 @@
  
 # OCR (with EMNIST Training Model)
 
- &nbsp;&nbsp;&nbsp;2020학년도 2학기 [데이터분석 캡스톤 디자인] 수업의 프로젝트 과제로 EMNIST 학습을 통한 효율적인 이미지 속 문자 인식 모델을 구성하기로 한다.
+ &nbsp;&nbsp;&nbsp;2020학년도 2학기 [데이터분석 캡스톤 디자인] 수업의 프로젝트 과제로 EMNIST 학습을 통한 효율적인 이미지 속 문자 인식 모델을 구성하기로 한다.<br/>
 &nbsp;&nbsp;&nbsp;MNIST 데이터의 숫자를 분류하는 연구는 이미지를 분석하고 학습시켜 분류시키는 컴퓨터 비전 연구 분야에서 기초적인 연구로 많이 학습된다. 이에 대한 연구는 많이 진행되었고, 이를 효율적으로 학습시키는 모델들 역시 다양하게 구성되어 있다. 이번 캡스톤 디자인에서는 MNIST 데이터를 변형시킨 숫자와 문자로 구성된 EMNIST 데이터를 학습시키는 모델을 구현한 후, 이미지 속에서 문자 영역을 찾아내어 bounding box로 씌우고 그 문자를 인식하려고 한다. 
  &nbsp;&nbsp;&nbsp;즉, 이번 프로젝트의 큰 과제는 1) 이미지 속에서 문자 영역을 추출하는 것과 2) 추출한 문자를 인식하는 것이다. 두 알고리즘을 통합하여 하나의 모델로 완성시키는 것을 목표로 한다.
 
@@ -10,7 +10,7 @@
 ## 1. 모델 설계
 
 &nbsp;&nbsp;모델의 전반적인 구조는 [그림 1]과 같다.<br/>
-![model](model.JPG)<br/>
+![model](./ReadMe/model.JPG)<br/>
 [그림 1] 모델의 구조
 
 **1.1 이미지 속 문자 영역 추출**
@@ -25,7 +25,7 @@
 &nbsp;&nbsp;본 모델에서 문자 인식 모델을 구현하기 위해 사용한 EMNIST dataset은 ‘NIST Special Database 19’로부터의 필기 숫자/문자 데이터를 28x28 픽셀 이미지 형식으 로 바꾼 dataset으로, 구조는 MNIST dataset과 동일하다. 해당 dataset은 ByClass, ByMerge, Balanced, Letters, Digits, MNIST인 6가지의 다른 형태의 dataset으로 나뉜다. 
 &nbsp;&nbsp;6가지 dataset 중에서 데이터 개수가 814,255개로 가장 많은 ByClass와 ByMerge 중에서 유사한 대소문자 클래스를 합병한 ByMerge dataset을 사용한다. ByMerge dataset의 구성 예시는 [그림 2]와 같다. 각 이미지 아래의 label 값은 숫자, 알파벳 label에 대한 아스키코드 값이다.
 
-![emnist](/emnist.png)<br/>
+![emnist](./ReadMe/emnist.png)<br/>
 [그림 2] EMNIST - ByMerge Dataset의 구성 예시
 
 
