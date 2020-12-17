@@ -90,10 +90,10 @@ resultImage.save(저장 이미지 주소)
 
 **원본 이미지**<br/>
 
-![original 01](./ReadMe/original_01.jpg)<br/>
+![original 01](./ReadMe/original_01.jpg){: width="450" height="250"}
 [그림 3] 원본이미지 1
 
-![original 02](./ReadMe/original_02.jpg)<br/>
+![original 02](./ReadMe/original_02.jpg){: width="450" height="250"}<br/>
 [그림 4] 원본이미지 2
 
 <br/>
@@ -101,19 +101,19 @@ resultImage.save(저장 이미지 주소)
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
 &nbsp;&nbsp;[그림 5], [그림 6]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_01](./ReadMe/boundingBox_01.jpg)<br/>
+![boundingBox_01](./ReadMe/boundingBox_01.jpg){: width="450" height="250"}<br/>
 [그림 5] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
 
-![boundingBox_02](./ReadMe/boundingBox_02.jpg)<br/>
+![boundingBox_02](./ReadMe/boundingBox_02.jpg){: width="450" height="250"}<br/>
 [그림 6] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
 
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_01](./ReadMe/character_01.png)<br/>
+![character_01](./ReadMe/character_01.png){: width="450" height="250"}<br/>
 [그림 7] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장
 
-![character_02](./ReadMe/character_02.jpg)<br/>
+![character_02](./ReadMe/character_02.png){: width="450" height="250"}<br/>
 [그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장
 
 
