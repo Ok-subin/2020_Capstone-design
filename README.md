@@ -91,6 +91,7 @@ resultImage.save(저장 이미지 주소)
 **원본 이미지**<br/>
 
 ![original 01](./ReadMe/original_01.jpg =450x250)<br/>
+<img src="./ReadMe/original_01.jpg" width="450" height="250"><br/>
 [그림 3] 원본이미지 1
 
 ![original 02](./ReadMe/original_02.jpg){: width="450" height="250"}<br/>
