@@ -92,10 +92,10 @@ resultImage.save(저장 이미지 주소)
 
 ![original 01](./ReadMe/original_01.jpg)<br/>
 [그림 3] 원본이미지 1
-<br/>
+<br/><br/>
 
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
-&nbsp;&nbsp;[그림 4]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+[그림 4]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
 ![boundingBox_01](./ReadMe/boundingBox_01.jpg)<br/>
 [그림 4] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
@@ -119,7 +119,7 @@ resultImage.save(저장 이미지 주소)
 <br/>
 
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
-&nbsp;&nbsp;[그림 7]은 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+[그림 7]은 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
 ![boundingBox_02](./ReadMe/boundingBox_02.jpg)<br/>
 [그림 7] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
