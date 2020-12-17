@@ -88,7 +88,8 @@ resultImage.save(저장 이미지 주소)
 
 모델의 실험 결과를 위한 2개의 이미지가 있다. 
 
-첫 번째 실험은 테스트를 위해 다운받은 이미지인 [그림 3]에 대한 것이다.<br/>
+### 첫 번째 이미지에 대한 결과
+**첫 번째 실험**은 테스트를 위해 다운받은 이미지인 [그림 3]에 대한 것이다.<br/>
 
 ![original 01](./ReadMe/original_01.jpg)<br/>
 [그림 3] 원본이미지 1
@@ -103,13 +104,15 @@ resultImage.save(저장 이미지 주소)
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_01](./ReadMe/character_01.jpg)
+![character_01](./ReadMe/character_01.jpg)<br/>
 [그림 7] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
 
 <br/>
+### 두 번째 이미지에 대한 결과
 다음으로는 테스트를 위해 직접 쓴 손글씨 이미지인 [그림 4]에 대한 결과이다.
 
 <br/>
+
 
 ![original 02](./ReadMe/original_02.jpg)<br/>
 [그림 4] 원본이미지 2
@@ -125,15 +128,15 @@ resultImage.save(저장 이미지 주소)
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_02](./ReadMe/character_02.jpg)
+![character_02](./ReadMe/character_02.jpg)<br/>
 [그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
 <br/>
 
 ## 4. 사용 방법<br/>
 &nbsp;&nbsp;프로그램을 사용하려면 소스코드 전체를 다운받은 후, 'modelMain.py' 파일을 수정해야 한다. 수정사항은 다음과 같으며, 수정이 필요한 부분은 해당 파일 내부에 주석으로 표시를 해놓았다.
  
- &nbsp;&nbsp;&nbsp;&nbsp;1) 테스트할 이미지의 주소 : imageAdd 변수
- &nbsp;&nbsp;&nbsp;&nbsp;2) character별 이미지의 저장 주소 : saveAdd 변수
- &nbsp;&nbsp;&nbsp;&nbsp;3) bounding box가 그려진 이미지의 저장 주소 : boudingBoxAdd 변수
- &nbsp;&nbsp;&nbsp;&nbsp;4) 사용할 모델의 h5 파일이 저장된 주소 : model 변수에 저장될 함수 load_model의 parameter 값
+ &nbsp;&nbsp;&nbsp;&nbsp;1) 테스트할 이미지의 주소 : imageAdd 변수<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;2) character별 이미지의 저장 주소 : saveAdd 변수<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;3) bounding box가 그려진 이미지의 저장 주소 : boudingBoxAdd 변수<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;4) 사용할 모델의 h5 파일이 저장된 주소 : model 변수에 저장될 함수 load_model의 parameter 값<br/>
    
