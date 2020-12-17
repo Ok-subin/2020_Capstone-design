@@ -110,10 +110,10 @@ resultImage.save(저장 이미지 주소)
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_01](./ReadMe/character_01.png)<br/>
+![character_01](./ReadMe/character_01.jpg)<br/>
 [그림 7] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장
 
-![character_02](./ReadMe/character_02.png)<br/>
+![character_02](./ReadMe/character_02.jpg)<br/>
 [그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장
 
 
