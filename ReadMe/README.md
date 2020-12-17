@@ -10,7 +10,7 @@
 ## 1. 모델 설계
 
 &nbsp;&nbsp;모델의 전반적인 구조는 [그림 1]과 같다.
-![model](./ReadMe/model.jpg)
+![model](./model.jpg)<br/>
 [그림 1] 모델의 구조
 
 **1.1 이미지 속 문자 영역 추출**
@@ -25,7 +25,7 @@
 &nbsp;&nbsp;본 모델에서 문자 인식 모델을 구현하기 위해 사용한 EMNIST dataset은 ‘NIST Special Database 19’로부터의 필기 숫자/문자 데이터를 28x28 픽셀 이미지 형식으 로 바꾼 dataset으로, 구조는 MNIST dataset과 동일하다. 해당 dataset은 ByClass, ByMerge, Balanced, Letters, Digits, MNIST인 6가지의 다른 형태의 dataset으로 나뉜다. 
 &nbsp;&nbsp;6가지 dataset 중에서 데이터 개수가 814,255개로 가장 많은 ByClass와 ByMerge 중에서 유사한 대소문자 클래스를 합병한 ByMerge dataset을 사용한다. ByMerge dataset의 구성 예시는 [그림 2]와 같다. 각 이미지 아래의 label 값은 숫자, 알파벳 label에 대한 아스키코드 값이다.
 
-![emnist](./ReadMe/emnist.png)
+![emnist](./ReadMe/emnist.png)<br/>
 [그림 2] EMNIST - ByMerge Dataset의 구성 예시
 
 
@@ -76,7 +76,7 @@ resultImage.save(저장 이미지 주소)
 |VGGNet 16|테스트2|
 |VGGNet 18|테스트2|
 |Inception|테스트2|
-[표 1] CNN 모델의 validation accuracy
+<br/>[표 1] CNN 모델의 validation accuracy
 
 <br/>
 
@@ -90,10 +90,10 @@ resultImage.save(저장 이미지 주소)
 
 **원본 이미지**
 
-![original 01](./ReadMe/original_01.jpg)
+![original 01](./ReadMe/original_01.jpg)<br/>
 [그림 3] 원본이미지 1
 
-![original 02](./ReadMe/original_02.jpg)
+![original 02](./ReadMe/original_02.jpg)<br/>
 [그림 4] 원본이미지 2
 
 <br/>
@@ -101,19 +101,19 @@ resultImage.save(저장 이미지 주소)
 **3.1 이미지 속 character 영역 인식 및 추출**
 &nbsp;&nbsp;[그림 5], [그림 6]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boudingBox_01](./ReadMe/boudingBox_01.jpg)
+![boudingBox_01](./ReadMe/boudingBox_01.jpg)<br/>
 [그림 5] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
 
-![boudingBox_02](./ReadMe/boudingBox_02.jpg)
+![boudingBox_02](./ReadMe/boudingBox_02.jpg)<br/>
 [그림 6] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
 
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 7], [그림 8]은 두 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_01](./ReadMe/character_01.png)
+![character_01](./ReadMe/character_01.png)<br/>
 [그림 7] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장
 
-![character_02](./ReadMe/character_02.jpg)
+![character_02](./ReadMe/character_02.jpg)<br/>
 [그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장
 
 
