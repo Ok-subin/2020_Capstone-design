@@ -1,5 +1,5 @@
 # 2020_Capstone design
- 
+ 소프트웨어융합학과 옥수빈 _ 데이터분석 캡스톤 디자인
 # OCR (with EMNIST Training Model)
 
  &nbsp;&nbsp;&nbsp;2020학년도 2학기 [데이터분석 캡스톤 디자인] 수업의 프로젝트 과제로 EMNIST 학습을 통한 효율적인 이미지 속 문자 인식 모델을 구성하기로 한다.<br/>
