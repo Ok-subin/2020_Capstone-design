@@ -18,7 +18,9 @@
 <br/>
 
 **1.2 추출한 문자 인식**<br/>
-&nbsp;&nbsp;이전 과정을 통해 추출한 문자 영역을 문자 인식 모델에 입력하여 어떤 문자/숫자인지 판별해내는 것이 최종 목표였기에, 문자 인식 모델을 구현해야 한다. 모델 학습을 위해 사용한 dataset은 EMNIST의 ByMerge dataset이며, CNN 구조를 활용한다. CNN의 여러 모델 중 1) ResNet, 2) VGGNet, 3) Inception 모델을 사용해보고, 성능을 비교해 모델을 완성시킨다.
+&nbsp;&nbsp;이전 과정을 통해 추출한 문자 영역을 문자 인식 모델에 입력하여 어떤 문자/숫자인지 판별해내는 것이 최종 목표였기에, 문자 인식 모델을 구현해야 한다. 모델 학습을 위해 사용한 dataset은 EMNIST의 ByMerge dataset이며, CNN 구조를 활용한다. CNN의 여러 모델 중 1) ResNet, 2) VGGNet, 3) Inception 모델을 사용해보고, 성능을 비교해 모델을 완성시킨다. 
+<br/>
+&nbsp;&nbsp;이후, 인식된 문자 영역에는 주요 문자 뿐만 아니라 다른 문자의 일부가 포함될 수도 있기 때문에 이를 제거해주기 위한 과정이 필요하다. 이는 Connected Component Labelling 과정을 통해 수행된다.
 <br/>
 
 **#EMNIST dataset**<br/>
