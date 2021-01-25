@@ -33,8 +33,9 @@
 
 ## 2. 모델 구현
 **2.1 이미지 속 문자 영역 추출**<br/>
-&nbsp;&nbsp;오픈소스 코드 상에는 word level 영역의 이미지를 저장하는 코드는 존재하지만, 본 프로젝트를 위해 필요한 character level 영역의 이미지를 저장하는 코드는 없기 때문에 해당 함수를 추가 구현했다. 아래의 함수를 추가로 생성하면서 임계값을 수정해주면 기존의 word level로 추출되던 문자 이미지를 character level로 추출할 수 있게 된다. 아래 함수는 CRAFT 프로그램 내의 'detection.py' 등 기존에 word level 결과를 생성하던 곳에 추가해주어야 한다. 
-
+CRAFT의 코드를 본 프로젝트에서 원하는 방향으로 사용하기 위해서 다음과 같이 수정하도록 한다. <br\>
+1. Character level bounding box 정보 추출 <br\>
+&nbsp;&nbsp;CRAFT에서는 word level bounding box 정보를 추출하는 코드만 제공하기 때문에, character level bounding box 정보를 추출하는 코드를 추가 구현해야한다. 아래의 함수를 추가로 생성하면서 임계값을 수정해주면 기존의 word level로 추출되던 문자 이미지를 character level로 추출할 수 있게 된다. 아래 함수는 CRAFT 프로그램 내의 'detection.py' 등 기존에 word level 결과를 생성하던 곳에 추가되어있다. 
 
 get_result_img 함수 추가
 ```
@@ -42,44 +43,145 @@ def get_result_img(image, score_text, score_link, text_threshold=0.68, link_thre
     copyimg = image   
     boxes = getDetBoxes2(score_text, score_link, text_threshold, link_threshold, low_text, s=False)  
     boxes = adjustResultCoordinates2(copyimg, boxes, 1.0, 1.0)  
-    file_utils.saveResult('text_image_char.jpg', image, boxes, dirname='.')
+    file_utils.saveResult('character image 저장 이름', image, boxes, dirname='저장 주소')
 ```
 
+<br/>
+2. character 간의 순서 정렬
+&nbsp;&nbsp;위 함수를 추가하여 character를 추출하면 기존 이미지 속 문자 순서대로 추출되지 않는다. 그렇기 때문에 아래의 함수를 추가하여 character들을 정렬해주는 과정이 필요하다. 이 함수는 'mainModel.py'에 구현되어 있다. 해당 과정은 1) word 영역 정보를 이용하여 각 word 영역 내의 character 분류해서 각각 다른 행의 배열에 저장, 2) 해당 행의 개수를 저장하는 배열(lineCharNum)을 생성하고 이는 word 내의 character 개수를 의미함, 3) (1)에서 저장한 character를 좌표 정보를 이용하여 순서대로 정렬하는 순서로 이루어진다. 여기서 (2)의 lineCharNum 배열은 이후에 문자 인식 결과를 출력할 때, 단어마다 구분하여 출력해주기 위해서 사용된다. 또한, 아래 함수에서 word 영역을 각각 10씩 늘려주는 이유는 간혹 character가 word 영역을 벗어나는 경우가 있기 때문이다. 어느 word 영역에 존재하는지만 파악하면 되기에 늘려주어도 상관없다.<br/>
 
-main 함수
 ```
-import easyocr  
-import PIL  
-from PIL import ImageDraw  
-im = PIL.Image.open(이미지 주소)  
-import numpy as np  
-import matplotlib.pyplot as plt  
-  
-// Reader class로 초기화  
-result = reader.readtext(이미지 주소)  
-  
-// main 실행 함수
-resultImage = draw_boxes(im, result)  
-resultImage = resultImage.convert("RGB")    --> RGB 값으로 변환해주어야 이미지 색상이 제대로 추출됨을 주의해야 한다.
-resultImage.save(저장 이미지 주소)
+def makeCharOrder(wordboxArray, charboxArray):
+    resultArray = []
+
+    firstIdx = 0
+    lastIdx = 0
+
+    for i in range(0, len(wordboxArray)):
+        word = wordboxArray[i][0]
+        wordX1 = math.floor(word[0][0]) - 10
+        wordX2 = math.ceil(word[1][0]) + 10
+        wordY1 = math.floor(word[0][1]) - 10
+        wordY2 = math.ceil(word[2][1]) + 10
+
+        for j in range(firstIdx, len(charboxArray)):
+            char = charboxArray[j]
+            charX1 = math.floor(char[0][0])
+            charX2 = math.ceil(char[1][0])
+            charY1 = math.floor(char[0][1])
+            charY2 = math.ceil(char[2][1])
+
+            if (j == len(charboxArray) - 1):
+                if ((charX1 in range(wordX1, wordX2) and charX2 in range(wordX1, wordX2))
+                        and (charY1 in range(wordY1, wordY2) and charY2 in range(wordY1, wordY2))):
+
+                    lastIdx += 1
+
+                    resultTemp = []
+                    for x in range(firstIdx, lastIdx):
+                        temp = []
+                        char = charboxArray[x]
+                        tempX1 = math.floor(char[0][0])
+                        tempX2 = math.ceil(char[1][0])
+                        tempY1 = math.floor(char[0][1])
+                        tempY2 = math.ceil(char[2][1])
+
+                        temp.append(tempX1)
+                        temp.append(tempX2)
+                        temp.append(tempY1)
+                        temp.append(tempY2)
+
+                        resultTemp.append(temp)
+
+                    firstIdx = lastIdx
+                    resultArray.append(resultTemp)
+                    break
+
+            if ((charX1 in range(wordX1, wordX2) and charX2 in range(wordX1, wordX2))
+                    and (charY1 in range(wordY1, wordY2) and charY2 in range(wordY1, wordY2))):
+                lastIdx += 1
+                continue
+
+            else:
+                resultTemp = []
+                for x in range(firstIdx, lastIdx):
+                    temp = []
+                    char = charboxArray[x]
+                    tempX1 = char[0][0]
+                    tempX2 = char[1][0]
+                    tempY1 = char[0][1]
+                    tempY2 = char[2][1]
+
+                    temp.append(tempX1)
+                    temp.append(tempX2)
+                    temp.append(tempY1)
+                    temp.append(tempY2)
+
+                    resultTemp.append(temp)
+
+                firstIdx = lastIdx
+                resultArray.append(resultTemp)
+                break
+
+    lineCharNum = []
+    for i in range (len(resultArray)):
+        temp = len(resultArray[i])
+        lineCharNum.append(temp)
+
+    result = []
+    for i in range(0, len(resultArray)):
+        x1Array = []
+        line = resultArray[i]
+        for j in range(0, len(line)):
+            x1Array.append(line[j][0])
+
+        x1sorted = x1Array[:]
+        x1sorted.sort()
+
+        temp = []
+        for j in range(0, len(line)):
+            num = x1sorted[j]
+            idx = x1Array.index(num)
+            temp.append(line[idx])
+
+        result.append(temp)
+    return result, lineCharNum
 ```
-&nbsp;&nbsp;main 함수는 이후 2.2의 문자 인식 모델과 합쳐져 하나의 모델로 구현될 때, 수정된다.
+<br/>
+3. 문자 영역에서 주요 문자를 구분해내기 위해 다음의 connected component labelling 함수를 구현한다. 본 프로젝트에서는 해당 함수에서 영역을 10씩 늘려주는 부분과 EMNIST의 학습이 '검은 배경 + 흰색 글씨'로 이루어진 데이터셋에 대해서면 학습이 이루어져 있다는 점을 감안하여 동일하게 '흰 배경 + 검은색 글씨' 데이터에 대해서만 테스트 가능하다. <br/>
+
+```
+def connectedComponentLabelling(imageAdd):
+    originImg = cv2.imread(imageAdd)
+    img = cv2.cvtColor(originImg, cv2.COLOR_RGB2GRAY)
+
+    _, th = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY_INV)
+    img = cv2.cvtColor(th, cv2.COLOR_GRAY2RGB)
+
+    _, labels, bb, centroids = cv2.connectedComponentsWithStats(th)
+
+    bbSize = []
+    for i in range(1, len(bb)):
+        size = bb[i][2] * bb[i][3]
+        bbSize.append(size)
+
+    maxIdx = bbSize.index(max(bbSize)) + 1
+    resultBb = bb[maxIdx]
+
+    x, y, w, h = resultBb[0], resultBb[1], resultBb[2], resultBb[3]
+
+    result = img.copy()
+    result = result[y:y+h, x:x+w]
+    result = cv2.copyMakeBorder(result, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value = [0,0,0])
+
+    cv2.imwrite(imageAdd, result)
+```
+
 <br/>
 
 
 **2.2 추출한 문자 인식**<br/>
-&nbsp;&nbsp;CNN 모델 몇 가지를 구현한 후, EMNIST dataset에 입력했을 때 성능이 가장 좋은 모델을 사용하기로 결정했다. 각 모델을 구현한 후, 정확도를 높이기 위해 layer의 추가/삭제를 통한 구조의 변경 또는 learning rate, batch size 등의 parameter의 조정의 과정을 거쳤다. 해당 과정을 통해 생성된 가장 높은 validation accuracy를 가진 모델을 선택한다.
-&nbsp;&nbsp;ResNet 18, VGGNet 16, Inception의 구현을 통해 EMNIST dataset을 학습시킨 결과의 validation accuracy는 표1과 같다. 소숫점 셋째자리에서 반올림한 값이다. 큰 차이는 나지 않지만, VGGNet이 accuracy가 가장 높은데다가 layer를 변경하기 쉽게 구현되어 있어서 VGGNet을 모델로 선택하였다.
-
-
-|Model|Validation Accuracy|
-|:------:|:---:|
-|ResNet 18|87.86%|
-|VGGNet 16|테스트2|
-|VGGNet 18|테스트2|
-|Inception|테스트2|
-<br/>[표 1] CNN 모델의 validation accuracy
-
+&nbsp;&nbsp;CNN 모델 몇 가지를 구현한 후, EMNIST dataset에 입력했을 때 성능이 가장 좋은 모델을 사용하기로 결정했다. 각 모델을 구현한 후, 정확도를 높이기 위해 layer의 추가/삭제를 통한 구조의 변경 또는 learning rate, batch size 등의 parameter의 조정의 과정을 거쳤다. 해당 과정을 통해 생성된 가장 높은 validation accuracy를 가진 모델을 선택하였다. 정확도 면에서 큰 차이는 나지 않지만, VGGNet이 accuracy가 가장 높고 layer를 변경하기 쉽게 구현되어 있는 데다가 이후에 전체 모델의 성능 평가를 통해서 최종적으로 VGGNet을 모델로 선택하였다. 
 <br/>
 
 **2.3 최종 모델 구현**<br/>
@@ -87,7 +189,6 @@ resultImage.save(저장 이미지 주소)
 
 
 ## 3. 결과<br/>
-모델의 실험 결과를 위한 2개의 이미지가 있다. 
 
 ### 첫 번째 이미지에 대한 결과
 **첫 번째 실험**은 테스트를 위해 다운받은 이미지인 [그림 3]에 대한 것이다.<br/>
@@ -99,39 +200,96 @@ resultImage.save(저장 이미지 주소)
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
 [그림 4]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_01](./ReadMe/boundingBox_01.jpg)<br/>
+![boundingBox_01](./ReadMe/boundingBox_01.png)<br/>
 [그림 4] 원본이미지 1에서 character 영역 인식 및 bounding box 생성
 
 <br/>
 &nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다.[그림 5]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_01](./ReadMe/character_01.jpg)<br/>
+![character_01](./ReadMe/character_01.png)<br/>
 [그림 5] 원본이미지 1의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
 
+&nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 6]은 문자 인식 결과이다.
+
+![character_01](./ReadMe/result_01.jpg)<br/>
+[그림 6] 원본이미지 1의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
+
 ### 두 번째 이미지에 대한 결과
-다음으로는 테스트를 위해 직접 쓴 손글씨 이미지인 [그림 6]에 대한 결과이다.
+**두 번째 실험**은 테스트를 위해 다운받은 이미지인 [그림 7]에 대한 것이다.<br/>
 
-<br/>
-
-
-![original 02](./ReadMe/original_02.jpg)<br/>
-[그림 6] 원본이미지 2
-
-<br/>
+![original 01](./ReadMe/original_02.jpg)<br/>
+[그림 7] 원본이미지 2
+<br/><br/>
 
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
-[그림 7]은 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+[그림 8]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_02](./ReadMe/boundingBox_02.jpg)<br/>
-[그림 7] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
+![boundingBox_02](./ReadMe/boundingBox_02.png)<br/>
+[그림 8] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
 
 <br/>
-&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다. [그림 8]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
+&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다.[그림 9]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
 
-![character_02](./ReadMe/character_02.jpg)<br/>
-[그림 8] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
+![character_02](./ReadMe/character_02.png)<br/>
+[그림 9] 원본이미지 2의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
+
+&nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 10]은 문자 인식 결과이다.
+
+![character_02](./ReadMe/result_02.jpg)<br/>
+[그림 10] 원본이미지 2의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
+
+### 세 번째 이미지에 대한 결과
+**세 번째 실험**은 테스트를 위해 다운받은 이미지인 [그림 11]에 대한 것이다.<br/>
+
+![original 03](./ReadMe/original_03.jpg)<br/>
+[그림 11] 원본이미지 3
+<br/><br/>
+
+**3.1 이미지 속 character 영역 인식 및 추출**<br/>
+[그림 12]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+
+![boundingBox_03](./ReadMe/boundingBox_03.png)<br/>
+[그림 12] 원본이미지 3에서 character 영역 인식 및 bounding box 생성
+
+<br/>
+&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다.[그림 13]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
+
+![character_03](./ReadMe/character_03.png)<br/>
+[그림 13] 원본이미지 3의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
+
+&nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 14]은 문자 인식 결과이다.
+
+![character_03](./ReadMe/result_03.jpg)<br/>
+[그림 14] 원본이미지 3의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
+<br/>
+
+### 네 번째 이미지에 대한 결과
+**네 번째 실험**은 테스트를 위해 다운받은 이미지인 [그림 15]에 대한 것이다.<br/>
+
+![original 04](./ReadMe/original_04.jpg)<br/>
+[그림 15] 원본이미지 4
+<br/><br/>
+
+**3.1 이미지 속 character 영역 인식 및 추출**<br/>
+[그림 16]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
+
+![boundingBox_04](./ReadMe/boundingBox_04.png)<br/>
+[그림 16] 원본이미지 4에서 character 영역 인식 및 bounding box 생성
+
+<br/>
+&nbsp;&nbsp;생성된 각 character level의 bounding box별로 잘라서 별도의 character 이미지로 모두 저장한다.[그림 17]은 이미지의 character가 별도로 폴더에 저장된 모습이다.
+
+![character_04](./ReadMe/character_04.png)<br/>
+[그림 17] 원본이미지 4의 각 character 영역을 잘라 별도의 이미지로 저장<br/>
+
+&nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 18]은 문자 인식 결과이다.
+
+![character_04](./ReadMe/result_04.jpg)<br/>
+[그림 18] 원본이미지 4의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
+<br/>
+
 
 ### 시연 동영상
 
