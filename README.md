@@ -211,7 +211,7 @@ def connectedComponentLabelling(imageAdd):
 
 &nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 6]은 문자 인식 결과이다.
 
-![character_01](./ReadMe/result_01.jpg)<br/>
+![result_01](./ReadMe/result_01.JPG)<br/>
 [그림 6] 원본이미지 1의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
 
@@ -236,7 +236,7 @@ def connectedComponentLabelling(imageAdd):
 
 &nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 10]은 문자 인식 결과이다.
 
-![character_02](./ReadMe/result_02.jpg)<br/>
+![result_02](./ReadMe/result_02.JPG)<br/>
 [그림 10] 원본이미지 2의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
 
@@ -261,7 +261,7 @@ def connectedComponentLabelling(imageAdd):
 
 &nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 14]은 문자 인식 결과이다.
 
-![character_03](./ReadMe/result_03.jpg)<br/>
+![resultr_03](./ReadMe/result_03.JPG)<br/>
 [그림 14] 원본이미지 3의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
 
@@ -286,7 +286,7 @@ def connectedComponentLabelling(imageAdd):
 
 &nbsp;&nbsp;최종 문자 인식 결과는 성능의 비교를 위해 VGG 16, ResNet, GoogLeNet 모두의 결과를 저장한다. [그림 18]은 문자 인식 결과이다.
 
-![character_04](./ReadMe/result_04.jpg)<br/>
+![result_04](./ReadMe/result_04.JPG)<br/>
 [그림 18] 원본이미지 4의 문자 인식 결과 : 각각 VGG, ResNet, GoogLeNet<br/>
 <br/>
 
