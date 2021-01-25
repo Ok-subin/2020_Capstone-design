@@ -225,7 +225,7 @@ def connectedComponentLabelling(imageAdd):
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
 [그림 8]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_02](./ReadMe/boundingBox_02.png)<br/>
+![boundingBox_02](./ReadMe/boundingBox_02.jpg)<br/>
 [그림 8] 원본이미지 2에서 character 영역 인식 및 bounding box 생성
 
 <br/>
@@ -250,7 +250,7 @@ def connectedComponentLabelling(imageAdd):
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
 [그림 12]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_03](./ReadMe/boundingBox_03.png)<br/>
+![boundingBox_03](./ReadMe/boundingBox_03.jpg)<br/>
 [그림 12] 원본이미지 3에서 character 영역 인식 및 bounding box 생성
 
 <br/>
@@ -275,7 +275,7 @@ def connectedComponentLabelling(imageAdd):
 **3.1 이미지 속 character 영역 인식 및 추출**<br/>
 [그림 16]는 각 원본이미지에 대해서 CRAFT 과정을 거친 후, bounding box를 그려 출력한 결과이다.
 
-![boundingBox_04](./ReadMe/boundingBox_04.png)<br/>
+![boundingBox_04](./ReadMe/boundingBox_04.jpg)<br/>
 [그림 16] 원본이미지 4에서 character 영역 인식 및 bounding box 생성
 
 <br/>
